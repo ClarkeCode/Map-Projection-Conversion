@@ -31,8 +31,3 @@ struct latlng_t {
 image_t load_image(std::string filepath, std::string filename);
 void save_image(image_t& img, std::string filepath);
 vec2_t calc_centre(image_t& img);
-
-vec2_t equirect_to_gall(const vec2_t point, const vec2_t geo_centre, const double equator_length);
-latlng_t reverse_equirect(const vec2_t point, const vec2_t geo_centre, const double equator_length);
-vec2_t forward_gall(const latlng_t point, const vec2_t geo_centre, const double equator_length);
-std::pair<image_t, double> map_equirect_to_gall(image_t& img);

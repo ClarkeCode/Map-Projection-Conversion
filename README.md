@@ -6,3 +6,8 @@ This project is a tool for converting between Map projections. This tool is bein
 
 * [Gall Steoregraphic](https://en.wikipedia.org/wiki/Gall_stereographic_projection)
 * [Equirectangular](https://en.wikipedia.org/wiki/Equirectangular_projection)
+
+## Development
+
+* Needs C++ 20
+* compile with `g++ -g src/*.cpp --std=c++20 -Iinclude -o main.o`

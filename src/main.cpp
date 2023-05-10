@@ -7,9 +7,13 @@
 #include <tuple>
 
 #include "auxi.hpp"
+#include "projections.hpp"
+
+// Please note if I manage to figure out how cmake works, I plan on adding the fmt library to this project instead of iostream
 
 int main() {
 
+    // Use c++ 20 filesystem because I hate iterating through directories
     const std::filesystem::path in_dir("C:\\Users\\Orwellian\\OpenVic2\\map-convert\\resource\\input");
     const std::filesystem::path out_dir("C:\\Users\\Orwellian\\OpenVic2\\map-convert\\resource\\output");
     std::vector<image_t> images;
