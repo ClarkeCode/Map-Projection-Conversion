@@ -5,8 +5,15 @@
 #include <math.h>
 
 #include <lodepng.h>
+#include <cassert>
 
 #include "auxi.hpp"
+
+pixel_t& image_t::px_at(size_t x, size_t y) {
+    assert(x < width);
+    assert(y < height);
+    return pixels_1d[x + y * width];
+}
 
 image_t load_image(std::string filepath, std::string filename) {
     std::vector<uint8_t> raw_image;
@@ -14,39 +21,21 @@ image_t load_image(std::string filepath, std::string filename) {
 
     uint32_t error = lodepng::decode(raw_image, width, height, filepath.c_str());
 
-    std::vector<std::vector<pixel_t>> pixels_2d;
-
-    for (size_t i = 0; i < height; ++i) {
-        pixels_2d.push_back(std::vector<pixel_t>());
-    }
-
-    // Convert the 1D pixel map to a 2D array for convenience
-    // I suck at math so not having to do the index -> x,y is nice
-    size_t pix_count = 0;
+    std::vector<pixel_t> pixels_1d;
     for (size_t i = 0; i < width * height * 4; i += 4) {
-        pixel_t current_pixel = { raw_image[i], raw_image[i + 1], raw_image[i + 2], raw_image[i + 3] };
-        size_t y = pix_count % height;
-        size_t x = pix_count / height;
-
-        pixels_2d[y].push_back(current_pixel);
-        ++pix_count; // Need to use pixel_count to correctly keep track of the where we are in the 2d array
-        // Could probably also just be done by (i / 4)
+        pixels_1d.push_back(fromRGBA(raw_image[i], raw_image[i + 1], raw_image[i + 2], raw_image[i + 3]));
     }
-
-    return image_t { pixels_2d, filename, height, width };
+    return image_t { pixels_1d, filename, height, width };
 }
 
 void save_image(image_t& img, std::string filepath) {
     std::vector<uint8_t> pixels;
 
-    // Convert the 2D pixel array back into the 1D pixel array used by LodePNG
-    for (size_t x = 0; x < img.width; ++x) {
-        for (size_t y = 0; y < img.height; ++y) {
-            pixels.push_back(img.pixels_2d[y][x].red);
-            pixels.push_back(img.pixels_2d[y][x].green);
-            pixels.push_back(img.pixels_2d[y][x].blue);
-            pixels.push_back(img.pixels_2d[y][x].alpha);
-        }
+    for (pixel_t const& px : img.pixels_1d) {
+        pixels.push_back(px.red);
+        pixels.push_back(px.green);
+        pixels.push_back(px.blue);
+        pixels.push_back(px.alpha);
     }
 
     unsigned error = lodepng::encode(filepath.c_str(), pixels, img.width, img.height);
