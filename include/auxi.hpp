@@ -12,10 +12,15 @@ struct pixel_t {
     uint8_t alpha;
 };
 
+inline pixel_t fromRGB(uint8_t r, uint8_t g, uint8_t b) { return pixel_t{r, g, b, 255}; }
+inline pixel_t fromRGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a) { return pixel_t{r, g, b, a}; }
+
 struct image_t {
-    std::vector<std::vector<pixel_t>> pixels_2d;
+    std::vector<pixel_t> pixels_1d;
     std::string name;
     size_t height, width;
+
+    pixel_t& px_at(size_t x, size_t y);
 };
 
 struct vec2_t {

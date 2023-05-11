@@ -68,7 +68,7 @@ std::pair<image_t, double> map_equirect_to_gall(image_t& img) {
     for (size_t y = 0; y < img.height; ++y) {
         projection_res.push_back(std::vector<vec2_t>());
         for (size_t x = 0; x < img.width; ++x) {
-            result.pixels_2d[y][x] = pixel_t { 255, 255, 255, 255 };
+            result.px_at(x, y) = pixel_t { 255, 255, 255, 255 };
             vec2_t fg_xy = equirect_to_gall(vec2_t {(double)x,(double)y}, eq_centre, img.width);
             // std::cout << "{ " << x << " , " << y << " } -> { " << fg_xy.x << " , " << fg_xy.y << " }\n";
             projection_res[y].push_back(fg_xy);
