@@ -40,12 +40,12 @@ void save_image(image_t& img, std::string filepath) {
     std::vector<uint8_t> pixels;
 
     // Convert the 2D pixel array back into the 1D pixel array used by LodePNG
-    for (size_t y = 0; y < img.height; ++y) {
-        for (size_t x = 0; x < img.width; ++x) {
+    for (size_t x = 0; x < img.width; ++x) {
+        for (size_t y = 0; y < img.height; ++y) {
             pixels.push_back(img.pixels_2d[y][x].red);
             pixels.push_back(img.pixels_2d[y][x].green);
             pixels.push_back(img.pixels_2d[y][x].blue);
-            pixels.push_back(img.pixels_2d[y][x].green);
+            pixels.push_back(img.pixels_2d[y][x].alpha);
         }
     }
 

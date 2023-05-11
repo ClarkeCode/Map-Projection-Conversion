@@ -1,5 +1,6 @@
 #include "auxi.hpp"
 #include "projections.hpp"
+#include <cmath>
 
 // Converting a set of pixel indices to their corresponding latitude and longitude on a sphere
 // Please see the compasition for more details but this is effectively a straight riff of the wikipedia formula
