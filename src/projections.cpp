@@ -1,6 +1,6 @@
 #include "auxi.hpp"
 #include "projections.hpp"
-#include <cmath>
+#include <math.h>
 
 // Converting a set of pixel indices to their corresponding latitude and longitude on a sphere
 // Please see the compasition for more details but this is effectively a straight riff of the wikipedia formula
@@ -75,6 +75,13 @@ std::pair<image_t, double> map_equirect_to_gall(image_t& img) {
         }
     }
 
-    // Not actually calculating the loss yet
-    return std::make_pair(result, 1);
+    return std::make_pair(result, 0);
+}
+
+vec2_t map_pixel_to_real(vec2i_t px_pos, vec2_t real_centre) {
+    return vec2_t { px_pos.i - real_centre.x, -1 * (px_pos.j - real_centre.y) };
+}
+
+vec2i_t map_real_to_pixel(vec2_t real_pos, vec2_t real_centre) {
+    return vec2i_t { (int64_t)floor(real_pos.x + real_centre.x), -1 * (int64_t)floor(real_pos.y - real_centre.y) };
 }
