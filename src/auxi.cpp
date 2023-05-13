@@ -15,6 +15,12 @@ pixel_t& image_t::px_at(size_t x, size_t y) {
     return pixels_1d[x + y * width];
 }
 
+pixel_t& image_t::px_at(vec2i_t p) {
+    assert(p.i < width);
+    assert(p.j < height);
+    return pixels_1d[p.i + p.j * width];
+}
+
 image_t load_image(std::string filepath, std::string filename) {
     std::vector<uint8_t> raw_image;
     unsigned width, height;
@@ -44,7 +50,7 @@ void save_image(image_t& img, std::string filepath) {
 // Gets the centre of an image
 vec2_t calc_centre(image_t& img) {
     return vec2_t {
-        static_cast<double>(img.width / 2),
-        static_cast<double>(img.height / 2),
+        static_cast<double>((img.width) / 2),
+        static_cast<double>((img.height) / 2),
     };
 }
